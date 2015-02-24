@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+/* document.body.childNodes[0].value="hello"; */
+ function checkNodetype(){
+	var nodes = document.body.childNodes;
+	for(var i=0;i<nodes.length;i++)
+		alert(nodes[i].nodeType);
+}
+ 
+</script>
+</head>
+<body><input/>
+<input type="button" value="검사" onclick="checkNodetype();"/>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<script>
+
+function changeImage(){
+	var img1 = document.getElementById("img1");
+	var imgSelect = document.getElementById("img-select");
+	var styleSelect = document.getElementById("style-select");
+	img1.src= imgSelect.value;
+	img1.style.borderWidth=styleSelect.value;
+}
+
+</script>
+<form>
+<input id="img-select"/>
+<input id="change" type="button" onclick="changeImage();" value="변경"/>
+<img style="border:5px solid #ff0000;" id="img1" src="test1.jpg"/>
+</form>
+<input id="style-select"/>
+</body>
+</html>
+
+
+
+

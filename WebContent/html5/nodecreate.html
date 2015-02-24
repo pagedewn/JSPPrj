@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<script>
+	function clicknode() {
+		var text = document.createTextNode("안녕하세요");
+
+		var div1 = document.getElementById("div1");
+		div1.appendChild(text);
+	}
+
+	function clicknode2() {
+		var img1 = document.createElement("img");
+		img1.src = "test1.jpg";
+
+		var div1 = document.getElementById("div1");
+		div1.appendChild(img1);
+	}
+
+	function clicknode3() {
+		var div1 = document.getElementById("div1");
+		var last = div1.lastChild;
+		div1.removeChild(last);
+	}
+
+	function clicknode4() {
+		var div1 = document.getElementById("div1");
+		var clone1 = div1.cloneNode(true);
+		var target = document.body;
+		target.appendChild(clone1);
+		
+	}
+	
+	
+</script>
+
+<body>
+
+<div id="div1">
+<font></font>
+<input/>
+</div>
+
+<p>
+<input value="텍스트노드 추가" onclick="clicknode();" type="button" />
+<input value="엘리먼트 추가" onclick="clicknode2();" type="button" />
+<input value="막내 삭제" onclick="clicknode3();" type="button" />
+<input value="클론 생성" onclick="clicknode4();" type="button" />
+</p>
+
+</body>
+</html>

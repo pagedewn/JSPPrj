@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="../css/reset.css" rel="stylesheet" type="text/css" />
+<style>
+.gallery {
+   width: 500px;
+   height: 400px;
+   border: 1px solid #000;
+}
+
+.gallery-show-box {
+   width: 100%;
+   height: 300px;
+   background: #828282;
+   overflow: hidden;
+}
+
+.gallery-show-box>img:hover{
+   display: block;
+   margin-top: 25px;
+   margin-left: auto;
+   margin-right: auto;
+   height: 250px;
+   
+   
+   
+     transform: rotate(20deg) scale(1) skew(1deg) translate(0px);
+-webkit-transform: rotate(20deg) scale(1) skew(1deg) translate(0px);
+-moz-transform: rotate(20deg) scale(1) skew(1deg) translate(0px);
+-o-transform: rotate(20deg) scale(1) skew(1deg) translate(0px);
+-ms-transform: rotate(20deg) scale(1) skew(1deg) translate(0px);
+}
+
+.gallery-pic-box {
+   width: 100%;
+   height: 100px;
+   background: #000;
+}
+
+.gallery-pic-clipper {
+   width: 450px;
+   height: 100%;
+   float: left;
+   position: relative;
+   overflow: hidden;
+}
+
+.gallery-pic-list {
+   display: inline-block;
+   height: 100%;
+   left: 0px;
+   top: 0px;
+   position: absolute;
+   border: 1px solid red;
+   width: 2000px;
+}
+
+.gallery-pic-item {
+   width: 80px;
+   height: 100%;
+   float: left;
+   border: 1px solid #ffffff;
+}
+
+.gallery-pic {
+   height: 100%;
+   width: 100%;
+}
+
+.gallery-prev-button {
+   width: 25px;
+   height: 100%;
+   float: left;
+   background: pink;
+}
+
+.gallery-next-button {
+   width: 25px;
+   height: 100%;
+   float: left;
+   background: pink;
+}
+
+.gallery-file {
+   display: none;
+}
+
+.file-button {
+   cursor: pointer;
+}
+</style>
+<script>
+   function picClick() {
+      /* alert(event.currentTarget.tagName); */
+      /* event.preventDefault();  */
+
+      if (event.target.tagName != "IMG")
+         return;
+
+      var img = document.createElement("img");
+      img.src = event.target.src;
+      img.style.height = "200px";
+
+      img.addEventListener("show", function(e) {
+         alert("show Show show");
+      });
+
+      /* var box = document.getElementById("gallery-show-box"); */
+      var box = document.querySelector(".gallery-show-box");
+      var firstNode;
+      while (firstNode = box.firstChild)
+         box.removeChild(firstNode);
+      box.appendChild(img);
+      
+      animateTo(img, "height", "250px", 1000, linear);
+   }
+
+   window.addEventListener("load", function() {
+      /* var pic1 = document.getElementById("gallery-pic1");
+      var pics = document.getElementById("gallery-pic-list"); */
+      /* var pic1 = document.querySelector(".gallery-pic1"); */
+      var pics = document.querySelector(".gallery-pic-list");
+
+      /* pic1.addEventListener("click", picClick, true); */
+      pics.addEventListener("click", picClick, true);
+
+      /* var fileButton = document.getElementById(".file-button"); */
+      var fileButton = document.querySelector(".file-button");
+      fileButton.addEventListener("click", function() {
+         /* var event = new MouseEvent("click", {
+            "view" : window,
+            "bubbles" : true,
+            "cancelable" : true
+         }); */
+         var event = document.createEvent("MouseEvent");
+         event.initEvent("click", true, true);
+         /* var file = document.getElementById("gallery-file"); */
+         var file = document.querySelector(".gallery-file");
+         file.dispatchEvent(event);
+      });
+
+      var prevbtn = document.querySelector(".gallery-prev-button");
+      var nextbtn = document.querySelector(".gallery-next-button");
+      pics.style.left = "0px";
+
+      prevbtn.addEventListener("click", function() {
+         /* var test = ["left","top"];  */
+         animateTo(pics, "left", "-120px", 1000, bb);
+          /* move2(pics, test, "-120px",1000); */
+      });
+
+      nextbtn.addEventListener("click", function() {
+         animateTo(pics, "left", "120px", 2000,aa);
+      });
+
+      /*       var img1=document.getElementById("gallery-pic1");
+       var img2=document.getElementById("gallery-pic2");
+       var img3=document.getElementById("gallery-pic3");
+       var img4=document.getElementById("gallery-pic4");
+       var img5=document.getElementById("gallery-pic5");
+      
+       img1.onclick=picClick;
+       img2.onclick=picClick;
+       img3.onclick=picClick;
+       img4.onclick=picClick;
+       img5.onclick=picClick; */
+   });
+   //lesson1
+   /* function move(target, property, to) {
+      if (target.style[property] == "")
+         target.style[property] = "0px";
+
+      var from = parseInt(target.style[property]);
+      var to = parseInt(to);
+      to = to + from;
+      var start = new Date();
+
+      var id = setInterval(function() {
+         var timePassed = new Date() - start;
+         var progress = timePassed / duration;
+
+         if (progress > 1)
+            progress = 1;
+
+         target.style[property] = (from + (to - from) * progress) + "px";
+
+         if (progress == 1)
+            clearInterval(id);
+      }, 10);
+   }
+    */
+   /*     function move(target, property, to, duration) {
+    if (target.style[property] == "")
+    target.style[property] = "0px";
+
+    var from = parseInt(target.style[property]);
+    var to = parseInt(to);
+    to = to + from;
+    var start = new Date();
+
+    var id = setInterval(function() {
+    var timePassed = new Date() - start;
+    var progress = timePassed / duration;
+
+    if (progress > 1)
+    progress = 1;
+
+    target.style[property] = (from + (to - from) * progress) + "px";
+
+    if (progress == 1)
+    clearInterval(id);
+    }, 10);
+    } */
+/*     
+     function move2(target, property, to, duration) {
+
+      for (i in property) {
+         if (target.style[property[i]] == "")
+            target.style[property[i]] = "0px";
+
+      }
+      var from = parseInt(target.style[property[0]]);
+      var to = parseInt(to);
+      to = to + from;
+      var start = new Date();
+
+      var id = setInterval(function() {
+         var timePassed = new Date() - start;
+         var progress = timePassed / duration;
+
+         if (progress > 1)
+            progress = 1;
+         for (i in property) {
+            target.style[property[i]] = (from + (to - from) * progress)
+                  + "px";
+         }
+         if (progress == 1)
+            clearInterval(id);
+      }, 10);
+   }
+   
+   function animate(target, property, to, duration, easing) {
+      if (target.style[property] == "")
+         target.style[property] = "0px";
+
+      var from = parseInt(target.style[property]);
+      var to = parseInt(to);
+      to = to + from;
+      var start = new Date();
+
+      var id = setInterval(
+            function() {
+               var timePassed = new Date() - start;
+               var progress = timePassed / duration;
+
+               if (progress > 1)
+                  progress = 1;
+
+               if (easing)
+                  target.style[property] = (from + (to - from)
+                        * easing(progress))
+                        + "px";
+               else
+                  target.style[property] = (from + (to - from) * progress)
+                        + "px";
+
+               if (progress == 1)
+                  clearInterval(id);
+            }, 10);
+   }
+   function animate3(target, property, to, duration, easing) {
+      if (target.style[property] == "")
+         if(property == "opacity")
+            target.style[property] = "0";
+         else
+            target.style[property] = "0px";
+            
+
+      var from = parseInt(target.style[property]);
+      var to = parseInt(to);
+      to = to + from;
+      var start = new Date();
+
+      var id = setInterval(
+            function() {
+               var timePassed = new Date() - start;
+               var progress = timePassed / duration;
+               var result = "";
+
+               if (progress > 1)
+                  progress = 1;
+
+               if (easing)
+                  result = (from + (to - from) * easing(progress));
+               else
+                  result = (from + (to - from) * progress);
+               
+               if(property != "opacity")
+                  result += "px";
+               
+               target.style[property] = result;
+               if (progress == 1)
+                  clearInterval(id);
+            }, 10);
+   }
+   function animate2(target, property, to, duration, easing) {
+      if (target.style[property] == "")
+         target.style[property] = "0";
+
+      var from = parseInt(target.style[property]);
+      var to = parseInt(to);
+      to = to + from;
+      var start = new Date();
+
+      var id = setInterval(
+            function() {
+               var timePassed = new Date() - start;
+               var progress = timePassed / duration;
+
+               if (progress > 1)
+                  progress = 1;
+
+               if (easing)
+                  target.style[property] = (from + (to - from)
+                        * easing(progress));
+               else
+                  target.style[property] = (from + (to - from) * progress);
+
+               if (progress == 1)
+                  clearInterval(id);
+            }, 10);
+   }
+   
+   function animateTo(target, property, to, duration, easing){
+      if (target.style[property] == "")
+         if(property == "opacity")
+            target.style[property] = "0";
+         else
+            target.style[property] = "0px";
+            
+
+      var from = parseInt(target.style[property]);
+      var to = parseInt(to);
+      
+      var start = new Date();
+
+      var id = setInterval(
+            function() {
+               var timePassed = new Date() - start;
+               var progress = timePassed / duration;
+               var result = "";
+
+               if (progress > 1)
+                  progress = 1;
+
+               if (easing)
+                  result = (from + (to - from) * easing(progress));
+               else
+                  result = (from + (to - from) * progress);
+               
+               if(property != "opacity")
+                  result += "px";
+               
+               target.style[property] = result;
+               if (progress == 1)
+                  clearInterval(id);
+            }, 10);
+      
+   }
+    */
+   
+   function animateTo(target, property, to, duration, easing){
+      if (target.style[property] == "")
+         if(property == "opacity")
+            target.style[property] = "0";
+         else
+            target.style[property] = "0px";
+            
+
+      var from = parseInt(target.style[property]);
+      var to = parseInt(to);
+      
+      var start = new Date();
+
+      var id = setInterval(
+            function() {
+               var timePassed = new Date() - start;
+               var progress = timePassed / duration;
+               var result = "";
+
+               if (progress > 1)
+                  progress = 1;
+
+               if (easing)
+                  result = (from + (to - from) * easing(progress));
+               else
+                  result = (from + (to - from) * progress);
+               
+               if(property != "opacity")
+                  result += "px";
+               
+               target.style[property] = result;
+               if (progress == 1)
+                  clearInterval(id);
+            }, 10);
+      
+   }
+   
+   function linear(progress){
+      return progress;
+   }
+   function bb(progress) {
+      return -1 * Math.pow(progress-1, 2) + 1;
+   }
+   function aa(progress) {
+      return Math.pow(progress,2);
+   }
+</script>
+</head>
+<body>
+   <div class="gallery">
+      <div class="gallery-show-box"></div>
+      <div class="gallery-pic-box">
+         <div class="gallery-prev-button">◀</div>
+         <div class="gallery-pic-clipper">
+            <ul class="gallery-pic-list">
+               <li class="gallery-pic-item"><img class="gallery-pic"
+                  src="img1.jpg" /></li>
+               <li class="gallery-pic-item"><a href="http://www.tune-a.com">
+                     <img class="gallery-pic" src="img2.jpg" />
+               </a></li>
+               <li class="gallery-pic-item"><img class="gallery-pic"
+                  src="img1.jpg" /></li>
+               <li class="gallery-pic-item"><img class="gallery-pic"
+                  src="img2.jpg" /></li>
+               <li class="gallery-pic-item"><img class="gallery-pic"
+                  src="img3.jpg" /></li>
+               <li class="gallery-pic-item"><img class="gallery-pic"
+                  src="img4.jpg" /></li>
+               <li class="gallery-pic-item"><a href="http://www.tune-a.com">
+                     <img class="gallery-pic" src="img1.jpg" />
+               </a></li>
+               <li class="gallery-pic-item"><img class="gallery-pic"
+                  src="img1.jpg" /></li>
+               <li class="gallery-pic-item"><img class="gallery-pic"
+                  src="img2.jpg" /></li>
+               <li class="gallery-pic-item"><img class="gallery-pic"
+                  src="img3.jpg" /></li>
+               <li class="gallery-pic-item"><img class="gallery-pic"
+                  src="img4.jpg" /></li>
+               <li class="gallery-pic-item"><a href="http://www.tune-a.com">
+                     <img class="gallery-pic" src="img1.jpg" />
+               </a></li>
+               <li class="gallery-pic-item"><img class="gallery-pic"
+                  src="test1.jpg" /></li>
+               <li class="gallery-pic-item"><img class="gallery-pic"
+                  src="test2.jpg" /></li>
+               <li class="gallery-pic-item"><img class="gallery-pic"
+                  src="test3.jpg" /></li>
+            </ul>
+         </div>
+         <div class="gallery-next-button">▶</div>
+         <div>
+            <input type="file" class="gallery-file" /> <span
+               class="file-button">파일 선택</span>
+         </div>
+      </div>
+   </div>
+</body>
+</html>
